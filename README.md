@@ -1,11 +1,16 @@
+﷽
+
 # Overview
 TestX is very simple single header to create typesafe test data for your testing framework. You simply make test data by specifying the types for each parameter and use them accordingly
 
 By default, header comes with google testing header but feel free to change it to match your need.
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/muflihun/testx/blob/master/LICENSE)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/MuflihunDotCom/25)
+
 # Usage
 
-## Basic
+## Using `std::get`
 
 ```c++
 #include <testx.h>
@@ -27,11 +32,11 @@ TEST(NumberUtils, IsNumber)
     for (auto& item : IsNumberTestData) {
         bool b = std::get<item>(1);
     }
-    
+
 }
 ```
 
-## Using Custom Wrapper
+## Using `item.get`
 You can also define test data using `TestDataWithGet` and `TestCase2` that contains `get` for each item.
 
 ```c++
@@ -54,7 +59,7 @@ TEST(NumberUtils, IsNumber)
     for (auto& item : IsNumberTestData) {
         bool b = item.get<1, bool>();
     }
-    
+
 }
 ```
 
