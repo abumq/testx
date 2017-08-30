@@ -3,61 +3,30 @@
 # Overview
 TestX is very simple single header to create typesafe test data for your testing framework. You simply make test data by specifying the types for each parameter and use them accordingly
 
-By default, header comes with google testing header but feel free to change it to match your need.
-
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/muflihun/testx/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/MuflihunDotCom/25)
 
 # Usage
-
-## Using `std::get`
 
 ```c++
 #include <testx.h>
 
 using namespace muflihun::testx;
 
-static TestXData<const char*, bool> IsNumberTestData = {
-  TestCase("124", true),
-  TestCase("abc", false),
+//             c    expected
+static TestData<char, bool> isdigitTestData = {
+  TestCase('1', true),
+  TestCase('a', false),
 }
 ```
 
 You can use `std::get` to get item without specifying the type
 
 ```c++
-// this is google testing framework TEST macro
-TEST(NumberUtils, IsNumber)
-{
-    for (auto& item : IsNumberTestData) {
-        bool b = std::get<item>(1);
-    }
-
-}
-```
-
-## Using `item.get`
-You can also define test data using `TestDataWithGet` and `TestCase2` that contains `get` for each item.
-
-```c++
-#include <testx.h>
-
-using namespace muflihun::testx;
-
-static TestDataWithGet<const char*, bool> IsNumberTestData = {
-  TestCase2("124", true),
-  TestCase2("abc", false),
-}
-```
-
-Now you can use `item.get<idx, type>` to get the item
-
-```c++
-// this is google testing framework TEST macro
-TEST(NumberUtils, IsNumber)
-{
-    for (auto& item : IsNumberTestData) {
-        bool b = item.get<1, bool>();
+void testNumber() {
+    for (auto& item : isdigitTestData) {
+        bool expected = std::get<item>(1);
+        assert(isdigit(std::get<item>(0)) == expected));
     }
 
 }
