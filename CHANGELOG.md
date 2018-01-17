@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.3] - 18-01-2018
+- Simplified the usage and updated docs
+
 ## [1.0.2] - 17-01-2018
 - Simplified usage and creating data
 - Updated license

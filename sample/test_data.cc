@@ -4,11 +4,37 @@
 
 using namespace muflihun::testx;
 
-int main() {
+void containsNumberTest()
+{
+    // a sample function
+    auto containsNumber = [](const std::string& s) -> bool {
+        for (auto& c : s) {
+            if (isdigit(c)) {
+                return true;
+            }
+        }
+        return false;
+    };
+    
+    // sample test data
+    TestData<std::string, bool> ContainsNumberData = {
+        { "abc123", true },
+        { "abc", false },
+    };
+    
+    for (auto& testcase : ContainsNumberData) {
+        auto s = testcase.get<0>();
+        auto expected = testcase.get<1>();
+        assert(containsNumber(s) == expected);
+    }
+
+}
+
+void isNumberTest()
+{
     TestData<char, bool> IsNumberData = {
-        TestCase('1', true),
-        TestCase('a', false),
-        //TestCase('a', true), // this will fail - uncomment to witness
+        { '1', true },
+        { 'a', false },
     };
     
     for (auto& testcase : IsNumberData) {
@@ -16,9 +42,10 @@ int main() {
         bool expected = testcase.get<1>();
         assert(isdigit(c) == expected);
     }
+}
 
-    static TestData<std::string, bool> SecondIsNumberData = {
-        TestCase(std::string("1"), true), // either explicitly construct
-		TestCase<std::string, bool>("2", true), // or do this
-    };
+int main()
+{
+    containsNumberTest();
+    isNumberTest();
 }
