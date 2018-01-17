@@ -1,10 +1,10 @@
 //
 //  Bismillah ar-Rahmaan ar-Raheem
 //
-//  TestX 1.0.1
+//  TestX 1.0.2
 //  Single header, header only helper for creating test data
 //
-//  Copyright (c) 2017 Muflihun Labs
+//  Copyright (c) 2017-present Muflihun Labs
 //
 //  This library is released under the MIT Licence.
 //
@@ -21,13 +21,35 @@
 namespace muflihun {
 namespace testx {
 
-template <typename... T>
-using TestData = const std::vector<std::tuple<T...>>;
+    template <typename... Args>
+    class TestCaseWrapper
+    {
+    public:    
+        template <std::size_t Index>
+        using TestCaseItemType = typename std::remove_reference<
+            decltype(std::get<Index>(std::tuple<Args...>()))
+                >::type;
+    
+        TestCaseWrapper(Args... args) : m_data(args...) {
+        }
+    
+        template <std::size_t Index>
+        auto get() const -> TestCaseItemType<Index> { 
+            return std::get<Index>(m_data); 
+        }
+    
+        const std::tuple<Args...>& data() const {
+            return m_data;
+        }
+    private:
+        std::tuple<Args...> m_data;
+    };
 
-template <typename... T>
-std::tuple<T...> TestCase(T... f) {
-    return std::make_tuple(f...);
-}
+    template <typename... T>
+    TestCaseWrapper<T...> TestCase(T... t) { return TestCaseWrapper<T...>(t...); }
+
+    template <typename... T>
+    using TestData = const std::vector<TestCaseWrapper<T...>>;
 
 } // namespace testx
 } // namespace muflihun
