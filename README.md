@@ -13,8 +13,8 @@ TestX is very simple single header to create typesafe test data for your testing
 
 using namespace muflihun::testx;
 
-//             c    expected
-static TestData<char, bool> isdigitTestData = {
+//              c    expected
+static TestData<char, bool> IsDigitTestData = {
   TestCase('1', true),
   TestCase('a', false),
 }
@@ -24,9 +24,10 @@ You can use `std::get` to get item without specifying the type
 
 ```c++
 void testNumber() {
-    for (auto& item : isdigitTestData) {
-        bool expected = std::get<item>(1);
-        assert(isdigit(std::get<item>(0)) == expected));
+    for (auto& item : IsDigitTestData) {
+        auto c = item.get<0>();
+        bool expected = item.get<1>();
+        assert(isdigit(c) == expected));
     }
 
 }
@@ -36,11 +37,11 @@ void testNumber() {
 ```
 The MIT License (MIT)
 
-Copyright (c) 2017 Muflihun Labs
+Copyright (c) 2017-present Muflihun Labs
 
 https://github.com/muflihun/testx
-https://muflihun.github.io
-https://muflihun.com
+https://muflihun.github.io/
+https://muflihun.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
