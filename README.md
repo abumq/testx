@@ -1,14 +1,14 @@
 ﷽
 
 # Overview
-TestX is very simple single header to create typesafe test data for your testing framework. You simply make test data by specifying the types for each parameter and use them accordingly
+TestX is extremely simple header to create typesafe test data.
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/muflihun/testx/blob/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/MuflihunDotCom/25)
 
 # Usage
 
-You can see practical usage on [residue tests](https://github.com/muflihun/residue/blob/develop/test/url-test.h)
+You can see practical usage on residue tests [basic](https://github.com/muflihun/residue/blob/develop/test/utils-test.h#L65) and [using wrapper](https://github.com/muflihun/residue/blob/develop/test/url-test.h)
 
 ```c++
 #include <testx.h>
@@ -17,8 +17,8 @@ using namespace muflihun::testx;
 
 //              c    expected
 static TestData<char, bool> IsDigitTestData = {
-  TestCase('1', true),
-  TestCase('a', false),
+  { '1', true },
+  { 'a', false },
 }
 ```
 
@@ -35,31 +35,50 @@ void testNumber() {
 }
 ```
 
-# Explicit Constructor Issue
-You may have trouble creating some test cases that contain implicit contructors e.g, `std::string`
-
-## Solution
-The most preferred method and most viable is as following example demonstrates (using `TestCaseWrapper`):
+# Explicit Type
+You can specify the test case type and re-use it using wrapper types (`TestDataW` and `TestCaseW`)
 
 ```
-    using TestCaseType = TestCaseWrapper<std::string, bool>; // Create a temporary wrapper
     
-    static TestData<std::string, bool> Data = {
-        TestCaseType("string", true),
-    };
-```
+using URLTestCase = TestCase<std::string, std::string, std::string, std::string, std::string, std::string>;
+ 
+        // Notice the TestDataW instead of TestData
+        // if we used TestData we would do:
+        //         TestData<std::string, std::string, std::string, std::string, std::string, std::string>
+static TestDataW<URLTestCase> URLTestData = {
+    { "https://192.168.1.100:3322/p1?q=1", "https", "192.168.1.100", "3322", "/p1", "q=1" },
+    { "http://192.168.1.19:3000/p2?q2=2", "http", "192.168.1.19", "3000", "/p2", "q2=2" },
+    { "HTTP://LOCALHOST:3000/PATH?QUERY1=1&QUERY2=2", "HTTP", "LOCALHOST", "3000", "/PATH", "QUERY1=1&QUERY2=2" },
+    { "http://localhost:3000/path?query1=1&query2=2", "http", "localhost", "3000", "/path", "query1=1&query2=2" },
+    { "http://localhost", "http", "localhost", "80", "", "" },
+    { "http://localhost:3000", "http", "localhost", "3000", "", "" },
+    { "http://localhost:3000/", "http", "localhost", "3000", "/", "" },
+    { "localhost:3000/", "http", "localhost", "3000", "/", "" },
+    { "localhost", "http", "localhost", "80", "", "" },
+    { "http://localhost", "http", "localhost", "80", "", "" },
+    { "https://localhost", "https", "localhost", "443", "", "" },
+    { "localhost/", "http", "localhost", "80", "/", "" },
+    { "HTTP://LOCALHOST:3000/PATH?QUERY1=1&QUERY2=2", "HTTP", "LOCALHOST", "3000", "/PATH", "QUERY1=1&QUERY2=2"},
 
-## Other Solutions (Not Recommended)
-You can also either specify the type or explicitely contruct the object:
+};
 
-```
-    TestCase<std::string, bool>("string", true);
-```
+void testUrl(const Url& url, const URLTestCase& item) // using URLTestCase that was previously defined
+{
+    ASSERT_EQ(url.protocol(), item.get<1>());
+    ASSERT_EQ(url.host(), item.get<2>());
+    ASSERT_EQ(url.port(), item.get<3>());
+    ASSERT_EQ(url.path(), item.get<4>());
+    ASSERT_EQ(url.query(), item.get<5>());
+    ASSERT_TRUE(url.isValid());
+}
 
-or
-
-```
-    TestCase(std::string("string"), true);
+TEST(UrlTest, TestUrls)
+{
+    for (const auto& item : URLTestData) {
+        Url url(item.get<0>());
+        testUrl(url, item);
+    }
+}
 ```
 
 # License
