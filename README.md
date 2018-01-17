@@ -8,6 +8,8 @@ TestX is very simple single header to create typesafe test data for your testing
 
 # Usage
 
+You can see practical usage on [residue tests](https://github.com/muflihun/residue/blob/develop/test/url-test.h)
+
 ```c++
 #include <testx.h>
 
