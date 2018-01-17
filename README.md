@@ -32,6 +32,20 @@ void testNumber() {
 }
 ```
 
+You may have trouble creating some test cases that contain implicit contructors e.g, `std::string`
+
+For them you will need to either specify the type or explicitely contruct the object:
+
+```
+    TestCase<std::string, bool>("string", true);
+```
+
+or
+
+```
+    TestCase(std::string("string"), true);
+```
+
 # License
 ```
 The MIT License (MIT)
