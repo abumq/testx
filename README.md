@@ -8,6 +8,8 @@ TestX is very simple single header to create typesafe test data for your testing
 
 # Usage
 
+You can see practical usage on [residue tests](https://github.com/muflihun/residue/blob/develop/test/url-test.h)
+
 ```c++
 #include <testx.h>
 
@@ -33,9 +35,22 @@ void testNumber() {
 }
 ```
 
+# Explicit Constructor Issue
 You may have trouble creating some test cases that contain implicit contructors e.g, `std::string`
 
-For them you will need to either specify the type or explicitely contruct the object:
+## Solution
+The most preferred method and most viable is as following example demonstrates (using `TestCaseWrapper`):
+
+```
+    using TestCaseType = TestCaseWrapper<std::string, bool>; // Create a temporary wrapper
+    
+    static TestData<std::string, bool> Data = {
+        TestCaseType("string", true),
+    };
+```
+
+## Other Solutions (Not Recommended)
+You can also either specify the type or explicitely contruct the object:
 
 ```
     TestCase<std::string, bool>("string", true);
@@ -45,20 +60,6 @@ or
 
 ```
     TestCase(std::string("string"), true);
-```
-
-The most preferred method and most viable is as following example demonstrates (using `TestCaseWrapper`):
-
-```
-    using TestCaseType = TestCaseWrapper<std::string, bool>; // Create a temporary wrapper
-    static TestData<std::string, bool> Data = {
-        TestCaseType("da024686f7f2da49da6c98253b42fe1c:erezutlgudgbtwza:i3eclcagfnUbK1B==", false),
-        TestCaseType("da024686f7f2da49da6c98253b42fe1c:i3eclcagfnUbK1B==", false),
-        TestCaseType("erezutlgudgbtwza:i3eclcagfnUbK1B==", false),
-        TestCaseType("i3eclcagfnUbK1B==", false),
-        TestCaseType("{'json':true}", true),
-        TestCaseType("   { ' json':true}", true),
-    };
 ```
 
 # License
