@@ -1,7 +1,7 @@
 //
 //  Bismillah ar-Rahmaan ar-Raheem
 //
-//  TestX 1.0.3
+//  TestX 1.0.4
 //  Single C++11 header for creating typesafe test data
 //
 //  Copyright (c) 2017-present Muflihun Labs
