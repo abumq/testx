@@ -55,7 +55,7 @@ namespace muflihun {
          * @brief A test data wrapper
          */
         template <typename T>
-        using TestDataW = const std::vector<T>;
+        using TestDataW = std::vector<T>;
         
         /**
          * @brief A simple test case container that can be iterated using for (auto& testcase : data) ...

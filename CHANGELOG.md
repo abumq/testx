@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.0.4] - 05-02-2018
+- Fixed compiler bug (segmentation fault) for GCC 4.8.3
+
 ## [1.0.3] - 18-01-2018
 - Simplified the usage and updated docs
 
