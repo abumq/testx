@@ -3,17 +3,17 @@
 # Overview
 TestX is extremely simple header to create typesafe test data.
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/muflihun/testx/blob/master/LICENSE)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/MuflihunDotCom/25)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/amrayn/testx/blob/master/LICENSE)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://amrayn.com/donate)
 
 # Usage
 
-You can see practical usage on residue tests [basic](https://github.com/muflihun/residue/blob/develop/test/utils-test.h#L65) and [using wrapper](https://github.com/muflihun/residue/blob/develop/test/url-test.h)
+You can see practical usage on residue tests [basic](https://github.com/amrayn/residue/blob/develop/test/utils-test.h#L65) and [using wrapper](https://github.com/amrayn/residue/blob/develop/test/url-test.h)
 
 ```c++
 #include <testx.h>
 
-using namespace muflihun::testx;
+using namespace amrayn::testx;
 
 //              c    expected
 static TestData<char, bool> IsDigitTestData = {
@@ -85,11 +85,10 @@ TEST(UrlTest, TestUrls)
 ```
 The MIT License (MIT)
 
-Copyright (c) 2017-present Muflihun Labs
+Copyright (c) 2017-present Amrayn Web Services
 
-https://github.com/muflihun/testx
-https://muflihun.github.io/
-https://muflihun.com/
+https://github.com/amrayn/testx
+https://amrayn.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
