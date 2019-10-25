@@ -4,22 +4,21 @@
 //  TestX 1.0.4
 //  Single C++11 header for creating typesafe test data
 //
-//  Copyright (c) 2017-present Muflihun Labs
+//  Copyright (c) 2017-present Amrayn Web Services
 //
 //  This library is released under the MIT Licence.
 //
-//  https://github.com/muflihun/testx/
-//  https://muflihun.github.io/
-//  https://muflihun.com/
+//  https://github.com/amrayn/testx/
+//  https://amrayn.com/
 //
-#ifndef MUFLIHUN_TEST_X_H
-#define MUFLIHUN_TEST_X_H
+#ifndef AMRAYN_TEST_X_H
+#define AMRAYN_TEST_X_H
 
 #include <tuple>
 #include <type_traits>
 #include <vector>
 
-namespace muflihun {
+namespace amrayn {
     namespace testx {
         
         /**
@@ -70,6 +69,6 @@ namespace muflihun {
         TestCase<T...> TestCaseW(T... t) { return TestCase<T...>(t...); }
         
     } // namespace testx
-} // namespace muflihun
+} // namespace amrayn
 
-#endif // MUFLIHUN_TEST_X_H
+#endif // AMRAYN_TEST_X_H
