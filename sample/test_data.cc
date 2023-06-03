@@ -2,7 +2,7 @@
 #include <string>
 #include "../src/testx.h"
 
-using namespace muflihun::testx;
+using namespace testx;
 
 void containsNumberTest()
 {
